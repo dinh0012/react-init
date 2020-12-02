@@ -1,0 +1,30 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  tags:
+    - tags build
+  script:
+    - echo "Building deploy package"
+    - yarn install
+    - yarn build
+    - echo "Build successful"
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - build
+deploy_production:
+  stage: deploy
+  tags:
+    - tags deploy_production
+  script:
+    - echo "Deploying to server"
+    - cp -rv build/* /var/www/html/icow/
+    - echo "Deployed"
+  environment:
+    name: production
+    url: http://192.168.6.227:8080/
+  only:
+    - master
