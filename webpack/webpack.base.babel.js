@@ -15,8 +15,9 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 
 const appDirectory = process.cwd();
 
-const publicPath = path.resolve(appDirectory, 'public')
-const buildPath = path.resolve(appDirectory, 'build')
+const publicPath = path.resolve(appDirectory, 'public');
+const buildPath = path.resolve(appDirectory, 'build');
+
 // eslint-disable-next-line max-lines-per-function
 module.exports = options => {
   isAnalyze &&
@@ -77,7 +78,6 @@ module.exports = options => {
         {
           // Preprocess 3rd party .css files located in node_modules
           test: /\.css$/,
-          include: /node_modules/,
           use: ['style-loader', 'css-loader'],
         },
         {
@@ -147,59 +147,62 @@ module.exports = options => {
         },
       ],
     },
-    plugins: options.plugins.concat([
-      // Always expose NODE_ENV to webpack, in order to use `process.env.NODE_ENV`
-      // inside your code for any environment checks; Terser will automatically
-      // drop any unreachable code.
-      new webpack.EnvironmentPlugin({
-        NODE_ENV: 'development',
-      }),
-      // Generate a manifest file which contains a mapping of all asset filenames
-      // to their corresponding output file so that tools can pick it up without
-      // having to parse `index.html`.
-     // new ManifestPlugin(),
-      // Moment.js is an extremely popular library that bundles large locale files
-      // by default due to how Webpack interprets its code. This is a practical
-      // solution that requires the user to opt into importing specific locales.
-      // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
-      // You can remove this if you don't use Moment.js:
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-      // Generate a service worker script that will precache, and keep up to date,
-      // the HTML & assets that are part of the Webpack build.
-      isProduction &&
-      new WorkboxWebpackPlugin.GenerateSW({
-        clientsClaim: true,
-        exclude: [/\.map$/, /asset-manifest\.json$/],
-        importWorkboxFrom: 'cdn',
-        navigateFallbackBlacklist: [
-          // Exclude URLs starting with /_, as they're likely an API call
-          new RegExp('^/_'),
-          // Exclude URLs containing a dot, as they're likely a resource in
-          // public/ and not a SPA route
-          new RegExp('/[^/]+\\.[^/]+$'),
-        ],
-      }),
-      isProduction && new WorkboxWebpackPlugin.InjectManifest({
-        swSrc: './src/service-worker.js',
-        exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/, /\.html$/],
-        // Bump up the default maximum size (2mb) that's precached,
-        // to make lazy-loading failure scenarios less likely.
-        // See https://github.com/cra-template/pwa/issues/13#issuecomment-722667270
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
-      }),
-      // Run typescript checker
-      new ForkTsCheckerWebpackPlugin({
-        async: !isProduction,
-      }),
-      /*new CopyWebpackPlugin({
-        patterns: [
-          {
-            from: path.resolve('src/assets'),
-            to: path.resolve('build/assets'),
-          },
-        ],
-      }),*/
-    ]).filter(Boolean),
+    plugins: options.plugins
+      .concat([
+        // Always expose NODE_ENV to webpack, in order to use `process.env.NODE_ENV`
+        // inside your code for any environment checks; Terser will automatically
+        // drop any unreachable code.
+        new webpack.EnvironmentPlugin({
+          NODE_ENV: 'development',
+        }),
+        // Generate a manifest file which contains a mapping of all asset filenames
+        // to their corresponding output file so that tools can pick it up without
+        // having to parse `index.html`.
+        // new ManifestPlugin(),
+        // Moment.js is an extremely popular library that bundles large locale files
+        // by default due to how Webpack interprets its code. This is a practical
+        // solution that requires the user to opt into importing specific locales.
+        // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
+        // You can remove this if you don't use Moment.js:
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+        // Generate a service worker script that will precache, and keep up to date,
+        // the HTML & assets that are part of the Webpack build.
+        isProduction &&
+          new WorkboxWebpackPlugin.GenerateSW({
+            clientsClaim: true,
+            exclude: [/\.map$/, /asset-manifest\.json$/],
+            importWorkboxFrom: 'cdn',
+            navigateFallbackBlacklist: [
+              // Exclude URLs starting with /_, as they're likely an API call
+              new RegExp('^/_'),
+              // Exclude URLs containing a dot, as they're likely a resource in
+              // public/ and not a SPA route
+              new RegExp('/[^/]+\\.[^/]+$'),
+            ],
+          }),
+        isProduction &&
+          new WorkboxWebpackPlugin.InjectManifest({
+            swSrc: './src/service-worker.js',
+            exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/, /\.html$/],
+            // Bump up the default maximum size (2mb) that's precached,
+            // to make lazy-loading failure scenarios less likely.
+            // See https://github.com/cra-template/pwa/issues/13#issuecomment-722667270
+            maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+          }),
+        // Run typescript checker
+        new ForkTsCheckerWebpackPlugin({
+          async: !isProduction,
+        }),
+        new CopyWebpackPlugin({
+          patterns: [
+            {
+              from: publicPath,
+              to: buildPath,
+            },
+          ],
+        }),
+      ])
+      .filter(Boolean),
     resolve: {
       modules: ['node_modules', 'src'],
       extensions: ['.js', '.jsx', '.react.js', '.ts', '.tsx'],

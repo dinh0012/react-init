@@ -11,7 +11,7 @@ module.exports = {
     'prettier',
     'prettier/react',
     'eslint:recommended',
-    'prettier/@typescript-eslint'
+    'prettier/@typescript-eslint',
   ],
   plugins: [
     'prettier',
@@ -38,7 +38,7 @@ module.exports = {
     'jsx-no-lambda': 0,
     'no-unused-expressions': 0,
     'object-curly-newline': 0,
-    'eqeqeq': 2,
+    eqeqeq: 2,
     'padding-line-between-statements': [
       1,
       { blankLine: 'always', prev: '*', next: 'return' },
@@ -49,8 +49,8 @@ module.exports = {
     ],
     'max-params': [2, 3],
     // "max-lines-per-function": ["error", {max: 60, skipBlankLines: true, skipComments: true}],
-    "max-depth": ["error", 4],
-    "max-lines": ["error", 400],
+    'max-depth': ['error', 4],
+    'max-lines': ['error', 400],
     semi: [2, 'always'],
     '@typescript-eslint/interface-name-prefix': 0,
     '@typescript-eslint/no-empty-interface': 0,
@@ -91,7 +91,7 @@ module.exports = {
     'import/no-webpack-loader-syntax': 0,
     'import/prefer-default-export': 0,
     'import/no-cycle': 2,
-    'no-param-reassign': 2,
+    'no-param-reassign': 0,
     indent: [
       2,
       2,
@@ -142,6 +142,8 @@ module.exports = {
     'require-yield': 0,
     'import/no-unresolved': 0,
     'consistent-return': 2,
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
   settings: {
     'import/parsers': {

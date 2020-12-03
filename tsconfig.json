@@ -7,14 +7,7 @@
     "preserveConstEnums": true,
     "baseUrl": "./src",
     "skipLibCheck": true,
-    "jsx": "react", // process JSX
-    "lib": [
-      "dom",
-      "es5",
-      "es6",
-      "es7",
-      "es2017"
-    ],
+    "lib": ["dom", "es5", "es6", "es7", "es2017"],
     "allowSyntheticDefaultImports": true, // no errors with commonjs modules interop
     "esModuleInterop": true,
     "allowJs": true, // include js files
@@ -33,12 +26,9 @@
     "pretty": true,
     "removeComments": true,
     "sourceMap": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "jsx": "react-jsx"
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

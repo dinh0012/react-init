@@ -1,16 +1,15 @@
-import React from 'react';
 import styled from 'styled-components';
-import InputAnt from 'antd/es/input/Input'
+import InputAnt, { InputProps as InputAntProps } from 'antd/es/input/Input';
 import 'antd/es/input/style/index.less';
-import './index.less'
-const Wrapper = styled.div`
+const Wrapper = styled.div``;
+type InputProps = {} & InputAntProps;
 
-`;
-const Input = (props) => {
+const Input = (props: InputProps) => {
   return (
     <Wrapper>
-      <InputAnt prefixCls="inflow-input" allowClear/>
+      <InputAnt {...props} allowClear />
     </Wrapper>
   );
 };
+
 export default Input;

@@ -18,13 +18,13 @@ module.exports = require('./webpack.base.babel')({
 
   // Add hot reloading in development
   entry: [
-    'webpack-hot-middleware/client?reload=true',
+    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
     path.join(process.cwd(), 'src/index.tsx'),
   ],
 
   // Don't use hashes in dev mode for better performance
   output: {
-     filename: '[name].[contenthash:8].js',
+    filename: '[name].[contenthash:8].js',
     chunkFilename: '[name].[contenthash:8].chunk.js',
   },
 

@@ -1,6 +1,6 @@
 # Install plugin vscode-styled-components for VS code
 https://marketplace.visualstudio.com/items?itemName=jpoissonnier.vscode-styled-components
 
-# Install json-server
+# Tracking file chunk bundle
 
-`yarn global add json-server`
+`yarn analyze`
